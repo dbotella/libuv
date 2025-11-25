@@ -270,6 +270,9 @@ jobs:
         run: |
           mkdir -p "${TMPDIR}"
           git config --global --add safe.directory "$(pwd)"
+          if [ -n "${{ secrets.COVERITY_PATH }}" ]; then
+            echo "${{ secrets.COVERITY_PATH }}/bin" >> $GITHUB_PATH
+          fi
       - name: Restore Coverity IDIR Cache
         uses: actions/cache@v4
         id: cache-idir
@@ -311,7 +314,6 @@ jobs:
           github_token: ${{ secrets.TOKEN }}
           coverity_config_path: coverity.yaml
           coverity_local: true
-          coverity_install_directory: ${{ secrets.COVERITY_PATH }}
           coverity_build_command: make -C build -j$(nproc)
           coverity_clean_command: |
             make -C build clean || true
