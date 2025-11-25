@@ -3,11 +3,11 @@ name: CI-unix
 on:
   pull_request:
     paths:
-      - '**'
-      - '!docs/**'
-      - '!src/win/**'
-      - '!.**'
-      - '.github/workflows/CI-unix.yml'
+      - "**"
+      - "!docs/**"
+      - "!src/win/**"
+      - "!.**"
+      - ".github/workflows/CI-unix.yml"
   push:
     branches:
       - v[0-9].*
@@ -141,22 +141,102 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {target: arm,                 toolchain: gcc-arm-linux-gnueabi,       cc: arm-linux-gnueabi-gcc,      qemu: qemu-arm      }
-          - {target: armhf,               toolchain: gcc-arm-linux-gnueabihf,     cc: arm-linux-gnueabihf-gcc,    qemu: qemu-arm      }
-          - {target: aarch64,             toolchain: gcc-aarch64-linux-gnu,       cc: aarch64-linux-gnu-gcc,      qemu: qemu-aarch64  }
-          - {target: riscv64,             toolchain: gcc-riscv64-linux-gnu,       cc: riscv64-linux-gnu-gcc,      qemu: qemu-riscv64  }
-          - {target: ppc,                 toolchain: gcc-powerpc-linux-gnu,       cc: powerpc-linux-gnu-gcc,      qemu: qemu-ppc      }
-          - {target: ppc64,               toolchain: gcc-powerpc64-linux-gnu,     cc: powerpc64-linux-gnu-gcc,    qemu: qemu-ppc64    }
-          - {target: ppc64le,             toolchain: gcc-powerpc64le-linux-gnu,   cc: powerpc64le-linux-gnu-gcc,  qemu: qemu-ppc64le  }
-          - {target: s390x,               toolchain: gcc-s390x-linux-gnu,         cc: s390x-linux-gnu-gcc,        qemu: qemu-s390x    }
-          - {target: mips,                toolchain: gcc-mips-linux-gnu,          cc: mips-linux-gnu-gcc,         qemu: qemu-mips     }
-          - {target: mips64,              toolchain: gcc-mips64-linux-gnuabi64,   cc: mips64-linux-gnuabi64-gcc,  qemu: qemu-mips64   }
-          - {target: mipsel,              toolchain: gcc-mipsel-linux-gnu,        cc: mipsel-linux-gnu-gcc,       qemu: qemu-mipsel   }
-          - {target: mips64el,            toolchain: gcc-mips64el-linux-gnuabi64, cc: mips64el-linux-gnuabi64-gcc,qemu: qemu-mips64el }
-          - {target: arm (u64 slots),     toolchain: gcc-arm-linux-gnueabi,       cc: arm-linux-gnueabi-gcc,      qemu: qemu-arm      }
-          - {target: aarch64 (u64 slots), toolchain: gcc-aarch64-linux-gnu,       cc: aarch64-linux-gnu-gcc,      qemu: qemu-aarch64  }
-          - {target: ppc (u64 slots),     toolchain: gcc-powerpc-linux-gnu,       cc: powerpc-linux-gnu-gcc,      qemu: qemu-ppc      }
-          - {target: ppc64 (u64 slots),   toolchain: gcc-powerpc64-linux-gnu,     cc: powerpc64-linux-gnu-gcc,    qemu: qemu-ppc64    }
+          - {
+              target: arm,
+              toolchain: gcc-arm-linux-gnueabi,
+              cc: arm-linux-gnueabi-gcc,
+              qemu: qemu-arm,
+            }
+          - {
+              target: armhf,
+              toolchain: gcc-arm-linux-gnueabihf,
+              cc: arm-linux-gnueabihf-gcc,
+              qemu: qemu-arm,
+            }
+          - {
+              target: aarch64,
+              toolchain: gcc-aarch64-linux-gnu,
+              cc: aarch64-linux-gnu-gcc,
+              qemu: qemu-aarch64,
+            }
+          - {
+              target: riscv64,
+              toolchain: gcc-riscv64-linux-gnu,
+              cc: riscv64-linux-gnu-gcc,
+              qemu: qemu-riscv64,
+            }
+          - {
+              target: ppc,
+              toolchain: gcc-powerpc-linux-gnu,
+              cc: powerpc-linux-gnu-gcc,
+              qemu: qemu-ppc,
+            }
+          - {
+              target: ppc64,
+              toolchain: gcc-powerpc64-linux-gnu,
+              cc: powerpc64-linux-gnu-gcc,
+              qemu: qemu-ppc64,
+            }
+          - {
+              target: ppc64le,
+              toolchain: gcc-powerpc64le-linux-gnu,
+              cc: powerpc64le-linux-gnu-gcc,
+              qemu: qemu-ppc64le,
+            }
+          - {
+              target: s390x,
+              toolchain: gcc-s390x-linux-gnu,
+              cc: s390x-linux-gnu-gcc,
+              qemu: qemu-s390x,
+            }
+          - {
+              target: mips,
+              toolchain: gcc-mips-linux-gnu,
+              cc: mips-linux-gnu-gcc,
+              qemu: qemu-mips,
+            }
+          - {
+              target: mips64,
+              toolchain: gcc-mips64-linux-gnuabi64,
+              cc: mips64-linux-gnuabi64-gcc,
+              qemu: qemu-mips64,
+            }
+          - {
+              target: mipsel,
+              toolchain: gcc-mipsel-linux-gnu,
+              cc: mipsel-linux-gnu-gcc,
+              qemu: qemu-mipsel,
+            }
+          - {
+              target: mips64el,
+              toolchain: gcc-mips64el-linux-gnuabi64,
+              cc: mips64el-linux-gnuabi64-gcc,
+              qemu: qemu-mips64el,
+            }
+          - {
+              target: arm (u64 slots),
+              toolchain: gcc-arm-linux-gnueabi,
+              cc: arm-linux-gnueabi-gcc,
+              qemu: qemu-arm,
+            }
+          - {
+              target: aarch64 (u64 slots),
+              toolchain: gcc-aarch64-linux-gnu,
+              cc: aarch64-linux-gnu-gcc,
+              qemu: qemu-aarch64,
+            }
+          - {
+              target: ppc (u64 slots),
+              toolchain: gcc-powerpc-linux-gnu,
+              cc: powerpc-linux-gnu-gcc,
+              qemu: qemu-ppc,
+            }
+          - {
+              target: ppc64 (u64 slots),
+              toolchain: gcc-powerpc64-linux-gnu,
+              cc: powerpc64-linux-gnu-gcc,
+              qemu: qemu-ppc64,
+            }
 
     steps:
       - uses: actions/checkout@v6
@@ -174,3 +254,68 @@ jobs:
       - name: Test
         run: |
           ${{ matrix.config.qemu }} build/uv_run_tests_a
+
+  coverity-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      TMPDIR: ${{ runner.temp }}
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - name: Setup Build Environment
+        run: |
+          mkdir -p "${TMPDIR}"
+          export TMPDIR
+          git config --global --add safe.directory "$(pwd)"
+      - name: Restore Coverity IDIR Cache
+        uses: actions/cache@v4
+        id: cache-idir
+        with:
+          path: .bridge/coverity_connect_scan/**/idir
+          key: coverity-idir-${{ github.event.repository.name }}-${{ github.base_ref || github.ref_name }}
+          restore-keys: |
+            coverity-idir-${{ github.event.repository.name }}-
+      - name: Coverity Scan
+        uses: blackduck-inc/black-duck-security-scan@v2.1.0
+        with:
+          coverity_url: ${{ vars.COVERITY_URL }}
+          coverity_user: ${{ secrets.COVERITY_USER }}
+          coverity_passphrase: ${{ secrets.COVERITY_PASSPHRASE }}
+          coverity_project_name: ${{ github.event.repository.name }}
+          coverity_stream_name: ${{ github.event.repository.name }}-${{ github.base_ref || github.ref_name }}
+          coverity_policy_view: "Outstanding Issues"
+          coverity_prComment_enabled: ${{ github.event_name == 'pull_request' }}
+          github_token: ${{ secrets.TOKEN }}
+          coverity_config_path: coverity.yaml
+          coverity_build_command: |
+            ./autogen.sh
+            mkdir -p build
+            (cd build && ../configure)
+            make -C build -j$(nproc)
+          coverity_clean_command: |
+            make -C build clean || true
+            rm -rf build
+          include_diagnostics: false
+          mark_build_status: "success"
+      - name: Save Coverity IDIR Cache
+        if: always()
+        uses: actions/cache@v4
+        with:
+          path: .bridge/coverity_connect_scan/**/idir
+          key: coverity-idir-${{ github.event.repository.name }}-${{ github.base_ref || github.ref_name }}
+      - name: Save Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bridge-logs
+          path: .bridge/coverity_connect_scan/
+          exclude: |
+            **/*.log
+            **/*.tmp
+            **/build-log.txt
+            **/idir/*
+          include-hidden-files: true
+          retention-days: 30
