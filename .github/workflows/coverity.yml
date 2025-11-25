@@ -82,6 +82,7 @@ jobs:
           github_token: ${{ secrets.TOKEN }}
           coverity_config_path: coverity.yaml
           coverity_local: true
+          coverity_install_directory: ${{ vars.COVERITY_PATH }}
           bridgecli_install_directory: ${{ vars.BRIDGECLI_PATH }}
           network_airgap: true
           coverity_build_command: make -C build -j$(nproc)
