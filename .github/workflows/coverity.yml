@@ -46,7 +46,7 @@ jobs:
           ./autogen.sh
           mkdir -p build
           (cd build && ../configure)
-      - name: Verify Coverity Secrets
+      - name: Verify Coverity Secrets and Paths
         run: |
           if [ -z "${{ secrets.COVERITY_URL }}" ]; then
             echo "ERROR: COVERITY_URL secret is not set or is empty"
@@ -60,7 +60,15 @@ jobs:
             echo "ERROR: COVERITY_PASSPHRASE secret is not set or is empty"
             exit 1
           fi
-          echo "✓ All Coverity secrets are configured"
+          if [ -n "${{ secrets.COVERITY_PATH }}" ] && [ ! -d "${{ secrets.COVERITY_PATH }}" ]; then
+            echo "ERROR: COVERITY_PATH directory does not exist: ${{ secrets.COVERITY_PATH }}"
+            exit 1
+          fi
+          if [ -n "${{ secrets.BRIDGECLI_PATH }}" ] && [ ! -d "${{ secrets.BRIDGECLI_PATH }}" ]; then
+            echo "ERROR: BRIDGECLI_PATH directory does not exist: ${{ secrets.BRIDGECLI_PATH }}"
+            exit 1
+          fi
+          echo "✓ All Coverity secrets and paths are configured"
       - name: Coverity Scan
         uses: blackduck-inc/black-duck-security-scan@v2.1.0
         with:
@@ -74,7 +82,6 @@ jobs:
           github_token: ${{ secrets.TOKEN }}
           coverity_config_path: coverity.yaml
           coverity_local: true
-          coverity_install_directory: ${{ secrets.COVERITY_PATH }}
           bridgecli_install_directory: ${{ secrets.BRIDGECLI_PATH }}
           network_airgap: true
           coverity_build_command: make -C build -j$(nproc)
