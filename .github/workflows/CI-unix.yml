@@ -311,7 +311,7 @@ jobs:
           github_token: ${{ secrets.TOKEN }}
           coverity_config_path: coverity.yaml
           coverity_local: true
-          coverity_install_directory: /opt/cov-analysis-linux64-2025.9.0
+          coverity_install_directory: "/opt/cov-analysis-linux64-2025.9.0"
           coverity_build_command: make -C build -j$(nproc)
           coverity_clean_command: |
             make -C build clean || true
