@@ -85,7 +85,7 @@ jobs:
           coverity_install_directory: ${{ vars.COVERITY_PATH }}
           bridgecli_install_directory: ${{ vars.BRIDGECLI_PATH }}
           network_airgap: true
-          coverity_build_command: "make -C build -j8"
+          coverity_build_command: "make -C build distcheck -j8"
           coverity_clean_command: |
             make -C build clean || true
             rm -rf build
