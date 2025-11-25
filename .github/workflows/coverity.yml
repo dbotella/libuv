@@ -85,7 +85,10 @@ jobs:
           coverity_install_directory: ${{ vars.COVERITY_PATH }}
           bridgecli_install_directory: ${{ vars.BRIDGECLI_PATH }}
           network_airgap: true
-          coverity_build_command: "make -C build distcheck -j8"
+          coverity_build_command: |
+            mkdir -p build
+            (cd build && ../configure || true)
+            make -C build distcheck -j8
           coverity_clean_command: make -C build clean || true
           include_diagnostics: false
           mark_build_status: "success"
