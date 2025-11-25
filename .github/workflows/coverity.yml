@@ -30,8 +30,8 @@ jobs:
         run: |
           mkdir -p "${TMPDIR}"
           git config --global --add safe.directory "$(pwd)"
-          if [ -n "${{ secrets.COVERITY_PATH }}" ]; then
-            echo "${{ secrets.COVERITY_PATH }}/bin" >> $GITHUB_PATH
+          if [ -n "${{ vars.COVERITY_PATH }}" ]; then
+            echo "${{ vars.COVERITY_PATH }}/bin" >> $GITHUB_PATH
           fi
       - name: Restore Coverity IDIR Cache
         uses: actions/cache@v4
@@ -60,12 +60,12 @@ jobs:
             echo "ERROR: COVERITY_PASSPHRASE secret is not set or is empty"
             exit 1
           fi
-          if [ -n "${{ secrets.COVERITY_PATH }}" ] && [ ! -d "${{ secrets.COVERITY_PATH }}" ]; then
-            echo "ERROR: COVERITY_PATH directory does not exist: ${{ secrets.COVERITY_PATH }}"
+          if [ -n "${{ vars.COVERITY_PATH }}" ] && [ ! -d "${{ vars.COVERITY_PATH }}" ]; then
+            echo "ERROR: COVERITY_PATH directory does not exist: ${{ vars.COVERITY_PATH }}"
             exit 1
           fi
-          if [ -n "${{ secrets.BRIDGECLI_PATH }}" ] && [ ! -d "${{ secrets.BRIDGECLI_PATH }}" ]; then
-            echo "ERROR: BRIDGECLI_PATH directory does not exist: ${{ secrets.BRIDGECLI_PATH }}"
+          if [ -n "${{ vars.BRIDGECLI_PATH }}" ] && [ ! -d "${{ vars.BRIDGECLI_PATH }}" ]; then
+            echo "ERROR: BRIDGECLI_PATH directory does not exist: ${{ vars.BRIDGECLI_PATH }}"
             exit 1
           fi
           echo "✓ All Coverity secrets and paths are configured"
@@ -82,7 +82,7 @@ jobs:
           github_token: ${{ secrets.TOKEN }}
           coverity_config_path: coverity.yaml
           coverity_local: true
-          bridgecli_install_directory: ${{ secrets.BRIDGECLI_PATH }}
+          bridgecli_install_directory: ${{ vars.BRIDGECLI_PATH }}
           network_airgap: true
           coverity_build_command: make -C build -j$(nproc)
           coverity_clean_command: |
