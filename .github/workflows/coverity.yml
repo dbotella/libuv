@@ -48,6 +48,12 @@ jobs:
           (cd build && ../configure)
       - name: Verify Coverity Secrets and Paths
         run: |
+          echo "Current working directory: $(pwd)"
+          echo "Workspace: ${{ github.workspace }}"
+          echo "Listing files in workspace:"
+          ls -la ${{ github.workspace }} | head -20
+          echo "Checking for coverity scripts:"
+          ls -la ${{ github.workspace }}/coverity-*.sh || echo "Scripts not found in workspace"
           if [ -z "${{ secrets.COVERITY_URL }}" ]; then
             echo "ERROR: COVERITY_URL secret is not set or is empty"
             exit 1
@@ -85,8 +91,8 @@ jobs:
           coverity_install_directory: ${{ vars.COVERITY_PATH }}
           bridgecli_install_directory: ${{ vars.BRIDGECLI_PATH }}
           network_airgap: true
-          coverity_build_command: bash coverity-build.sh
-          coverity_clean_command: bash coverity-clean.sh
+          coverity_build_command: bash ${{ github.workspace }}/coverity-build.sh
+          coverity_clean_command: bash ${{ github.workspace }}/coverity-clean.sh
           include_diagnostics: false
           mark_build_status: "success"
       - name: Save Coverity IDIR Cache

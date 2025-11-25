@@ -10,5 +10,5 @@ if [ ! -f build/Makefile ]; then
 fi
 
 # Build with distcheck
-make -C build distcheck -j8
+make -C build distcheck -j$(nproc) 
 
