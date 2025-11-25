@@ -86,9 +86,7 @@ jobs:
           bridgecli_install_directory: ${{ vars.BRIDGECLI_PATH }}
           network_airgap: true
           coverity_build_command: "make -C build distcheck -j8"
-          coverity_clean_command: |
-            make -C build clean || true
-            rm -rf build
+          coverity_clean_command: make -C build clean || true
           include_diagnostics: false
           mark_build_status: "success"
       - name: Save Coverity IDIR Cache
