@@ -277,10 +277,15 @@ jobs:
           key: coverity-idir-${{ github.event.repository.name }}-${{ github.base_ref || github.ref_name }}
           restore-keys: |
             coverity-idir-${{ github.event.repository.name }}-
+      - name: Configure Build
+        run: |
+          ./autogen.sh
+          mkdir -p build
+          (cd build && ../configure)
       - name: Coverity Scan
         uses: blackduck-inc/black-duck-security-scan@v2.1.0
         with:
-          coverity_url: ${{ vars.COVERITY_URL }}
+          coverity_url: ${{ secrets.COVERITY_URL }}
           coverity_user: ${{ secrets.COVERITY_USER }}
           coverity_passphrase: ${{ secrets.COVERITY_PASSPHRASE }}
           coverity_project_name: ${{ github.event.repository.name }}
@@ -289,11 +294,7 @@ jobs:
           coverity_prComment_enabled: ${{ github.event_name == 'pull_request' }}
           github_token: ${{ secrets.TOKEN }}
           coverity_config_path: coverity.yaml
-          coverity_build_command: |
-            ./autogen.sh
-            mkdir -p build
-            (cd build && ../configure)
-            make -C build -j$(nproc)
+          coverity_build_command: make -C build -j$(nproc)
           coverity_clean_command: |
             make -C build clean || true
             rm -rf build
