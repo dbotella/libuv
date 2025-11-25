@@ -314,6 +314,7 @@ jobs:
           github_token: ${{ secrets.TOKEN }}
           coverity_config_path: coverity.yaml
           coverity_local: true
+          network_airgap: true
           coverity_build_command: make -C build -j$(nproc)
           coverity_clean_command: |
             make -C build clean || true
