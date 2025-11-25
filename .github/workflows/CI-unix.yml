@@ -258,6 +258,7 @@ jobs:
   coverity-scan:
     runs-on: ubuntu-latest
     timeout-minutes: 240
+    environment: COVERITY
     env:
       TMPDIR: ${{ github.workspace }}/.tmp
     steps:
@@ -282,6 +283,21 @@ jobs:
           ./autogen.sh
           mkdir -p build
           (cd build && ../configure)
+      - name: Verify Coverity Secrets
+        run: |
+          if [ -z "${{ secrets.COVERITY_URL }}" ]; then
+            echo "ERROR: COVERITY_URL secret is not set or is empty"
+            exit 1
+          fi
+          if [ -z "${{ secrets.COVERITY_USER }}" ]; then
+            echo "ERROR: COVERITY_USER secret is not set or is empty"
+            exit 1
+          fi
+          if [ -z "${{ secrets.COVERITY_PASSPHRASE }}" ]; then
+            echo "ERROR: COVERITY_PASSPHRASE secret is not set or is empty"
+            exit 1
+          fi
+          echo "✓ All Coverity secrets are configured"
       - name: Coverity Scan
         uses: blackduck-inc/black-duck-security-scan@v2.1.0
         with:
